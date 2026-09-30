@@ -1,0 +1,28 @@
+# Matriz de incertidumbres - LifeOS
+
+## Objetivo
+
+Antes de comenzar el desarrollo de LifeOS, se han identificado los aspectos que conocemos, los que todavía no están claros y las cosas que estamos suponiendo.
+
+| Tema               | Qué sabemos                                                                      | Qué no sabemos                                                                    | Qué necesitamos preguntar                                     | Qué estamos suponiendo                                                                          |
+| ------------------ | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Usuarios           | LifeOS está pensado para personas que quieren mejorar su organización personal.  | No conocemos exactamente el perfil de usuario que utilizará la aplicación.        | ¿Qué tipo de usuario se considera prioritario?                | Que estudiantes y trabajadores pueden ser los principales usuarios.                             |
+| Funcionalidades    | La aplicación tendrá tareas, eventos, gastos, hábitos, objetivos y un dashboard. | No sabemos cuáles de estas funciones son obligatorias para el MVP.                | ¿Qué funcionalidades deben estar terminadas obligatoriamente? | Que todas las funcionalidades principales podrán incluirse en el MVP.                           |
+| Tiempo             | El proyecto se desarrollará durante el curso.                                    | No conocemos exactamente cuánto tiempo podremos dedicar al proyecto.              | ¿Cuál es la fecha límite de entrega?                          | Que habrá tiempo suficiente para realizar una primera versión funcional.                        |
+| Tecnología         | Se utilizarán HTML, CSS, JavaScript, Vite y una arquitectura SPA.                | No sabemos si será necesario utilizar alguna tecnología adicional.                | ¿Está permitido utilizar librerías externas?                  | Que JavaScript Vanilla será suficiente para desarrollar el proyecto.                            |
+| Almacenamiento     | La aplicación tendrá persistencia de datos.                                      | No está decidido exactamente dónde ni cómo se almacenarán los datos.              | ¿Qué sistema de almacenamiento debemos utilizar?              | Que podremos utilizar un sistema de almacenamiento adecuado a las características del proyecto. |
+| Usuarios y cuentas | La aplicación gestionará información personal.                                   | No sabemos si será necesario crear cuentas y sistemas de autenticación.           | ¿Es necesario implementar usuarios y login?                   | Que inicialmente puede funcionar con un único usuario local.                                    |
+| Dashboard          | La aplicación tendrá un dashboard con estadísticas.                              | No sabemos exactamente qué estadísticas debe mostrar.                             | ¿Qué información debe aparecer en el dashboard?               | Que se mostrarán datos relacionados con las diferentes funcionalidades de la aplicación.        |
+| Datos personales   | La aplicación puede almacenar información introducida por el usuario.            | No sabemos qué requisitos concretos de protección de datos debemos aplicar.       | ¿Qué requisitos legales debemos cumplir?                      | Que debemos almacenar únicamente los datos necesarios para el funcionamiento de la aplicación.  |
+| Diseño             | La aplicación debe ser sencilla y fácil de utilizar.                             | No está definido completamente el diseño visual.                                  | ¿Existe algún requisito concreto de diseño o interfaz?        | Que se podrá utilizar un diseño propio adaptado al proyecto.                                    |
+| Dispositivos       | Se trata de una aplicación web.                                                  | No sabemos si debe estar completamente adaptada a móviles, tablets y ordenadores. | ¿Qué dispositivos y tamaños de pantalla debemos soportar?     | Que como mínimo deberá funcionar correctamente en un ordenador.                                 |
+| Navegadores        | La aplicación se ejecutará desde un navegador.                                   | No sabemos qué navegadores se utilizarán para evaluar el proyecto.                | ¿Qué navegadores debemos tener en cuenta?                     | Que se probará en navegadores actuales y habituales.                                            |
+| Pruebas            | Será necesario comprobar que las funcionalidades funcionan correctamente.        | No sabemos cuánto tiempo podremos dedicar a las pruebas.                          | ¿Qué nivel de pruebas se espera para la entrega?              | Que será suficiente con realizar pruebas manuales de las funcionalidades principales.           |
+
+## Resumen
+
+Las principales incertidumbres del proyecto están relacionadas con el tiempo disponible, el alcance del MVP, el almacenamiento de datos y los requisitos técnicos y legales.
+
+Antes de comenzar el desarrollo sería conveniente aclarar estos puntos para evitar que el alcance del proyecto aumente demasiado o que aparezcan problemas durante el desarrollo.
+
+Estas incertidumbres se tendrán en cuenta durante la planificación del proyecto y podrán modificarse a medida que se obtenga nueva información.
