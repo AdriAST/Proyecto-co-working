@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeOS - Tareas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>LifeOS</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Mis tareas</h2>
+            <p>Organiza tus tareas pendientes</p>
+
+            <form id="formularioTarea">
+                <input type="text" id="nombreTarea"
+                       placeholder="Nombre de la tarea" required>
+
+                <input type="date" id="fechaTarea">
+
+                <button type="submit">Añadir tarea</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Lista de tareas</h2>
+            <ul id="listaTareas"></ul>
+        </section>
+    </main>
+
+</body>
+</html>
