@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=devide-width, initial-scale=1.0">
+    <title>LifeOS - Eventos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
+</head>
+
+<body>
+    <nav>
+        <h2>LifeOS</h2>
+        <a href="index.html">Inicio</a>
+        <a href="tareas.html">Tareas</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="eventos.html" class="activo">Eventos</a>
+        <a href="notas.html">Notas</a>
+    </nav>
+
+    <header>
+        <h1>Eventos</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Mis eventos</h2>
+            <p>Organiza tus próximos eventos.</p>
+
+            <form id="formularioEvento">
+                <input type="text" id="nombreEvento" placeholder="Nombre del evento" required>
+
+                <input type="date" id="fechaEvento" required>
+
+                <textarea id="descripcionEvento" placeholder="Descripción del evento"></textarea>
+
+                <button type="submit">Añadir evento</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Lista de eventos</h2>
+            <ul id="listaEventos"></ul>
+
+        </section>
+    </main>
+
+</body>
+
+</html>
