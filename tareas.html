@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeOS - Tareas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
+</head>
+
+<body>
+    <nav>
+    <h2>LifeOS</h2>
+
+    <a href="index.html">Inicio</a>
+    <a href="tareas.html" class="activo">Tareas</a>
+    <a href="gastos.html">Gastos</a>
+    <a href="calendario.html">Calendario</a>
+    <a href="eventos.html">Eventos</a>
+    <a href="notas.html">Notas</a>
+</nav>
+
+    <header>
+        <h1>LifeOS</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Mis tareas</h2>
+            <p>Organiza tus tareas pendientes</p>
+
+            <form id="formularioTarea">
+                <input type="text" id="nombreTarea"
+                       placeholder="Nombre de la tarea" required>
+
+                <input type="date" id="fechaTarea" required>
+                    <select id="prioridadTarea" required>
+                        <option value="">Selecciona una prioridad</option>
+                        <option value="alta">Alta</option>
+                        <option value="media">Media</option>
+                        <option value="baja">Baja</option>
+                    </select>
+                <button type="submit">Añadir tarea</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Lista de tareas</h2>
+            <ul id="listaTareas"></ul>
+        </section>
+    </main>
+
+</body>
+</html>

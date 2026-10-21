@@ -1,0 +1,114 @@
+nav {
+    background-color: #395874;
+    width: 220px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+}
+
+nav h2 {
+    color: white;
+}
+
+nav a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+}
+
+main {
+    margin-left: 280px;
+}
+header {
+    margin-left: 280px;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+header h1 {
+    color: #395874;
+    margin: 0;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #F2E8DF;
+    color: #313131;
+}
+.bienvenida {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.bienvenida h2 {
+    color: #395874;
+    margin-top: 0;
+}
+.resumen {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.tarjeta {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+}
+
+.tarjeta h3 {
+    color: #395874;
+    font-size: 16px;
+}
+
+.tarjeta p {
+    font-size: 24px;
+    font-weight: bold;
+}
+.tareasInicio {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.tareasInicio h2 {
+    color: #395874;
+}
+
+.tareasInicio a {
+    color: #D96704;
+    text-decoration: none;
+}
+
+.eventosInicio {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.eventosInicio h2 {
+    color: #395874;
+}
+
+.eventosInicio a {
+    color: #D96704;
+    text-decoration: none;
+}
+
+nav a:hover {
+    background-color: #D96704;
+    border-radius: 5px;
+}
+
+nav a.activo {
+    background-color: #D96704;
+    border-radius: 5px;
+}
