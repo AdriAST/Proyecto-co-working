@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LifeOS - Tareas</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/main.js" defer></script>
+    <script src="js/tareas.js" defer></script>
 </head>
 
 <body>
@@ -19,37 +19,103 @@
     <a href="calendario.html">Calendario</a>
     <a href="eventos.html">Eventos</a>
     <a href="notas.html">Notas</a>
+
+    <div class="pieMenu">
+    <div class="infoMenu">
+        <h3>Hoy</h3>
+        <p id="fechaMenu"></p>
+        <hr>
+        <p>Organiza tu día, a tu ritmo.</p>
+    </div>
+
+    <small>LifeOS · v1.0</small>
+</div>
 </nav>
 
     <header>
         <h1>LifeOS</h1>
     </header>
 
-    <main>
-        <section>
+    <main class="paginaTareas">
+
+    <section class="cabeceraTareas">
+        <div>
             <h2>Mis tareas</h2>
-            <p>Organiza tus tareas pendientes</p>
+            <p>Organiza tus pendientes y lleva el control de tu progreso.</p>
+        </div>
 
-            <form id="formularioTarea">
-                <input type="text" id="nombreTarea"
-                       placeholder="Nombre de la tarea" required>
+        <button id="botonNuevaTarea">+ Nueva tarea</button>
+    </section>
 
-                <input type="date" id="fechaTarea" required>
-                    <select id="prioridadTarea" required>
-                        <option value="">Selecciona una prioridad</option>
-                        <option value="alta">Alta</option>
-                        <option value="media">Media</option>
-                        <option value="baja">Baja</option>
-                    </select>
-                <button type="submit">Añadir tarea</button>
-            </form>
-        </section>
+    <!-- RESUMEN DE TAREAS -->
+<section class="resumenTareas">
 
-        <section>
-            <h2>Lista de tareas</h2>
-            <ul id="listaTareas"></ul>
-        </section>
-    </main>
+    <div class="tarjetaTarea">
+        <h3>Tareas pendientes</h3>
+        <p id="totalPendientes">0</p>
+        <span>Por completar</span>
+    </div>
+
+    <div class="tarjetaTarea">
+        <h3>Completadas</h3>
+        <p id="totalCompletadas">0</p>
+        <span>Tareas finalizadas</span>
+    </div>
+
+    <div class="tarjetaTarea">
+        <h3>Prioritarias</h3>
+        <p id="totalPrioritarias">0</p>
+        <span>Requieren atención</span>
+    </div>
+
+</section>
+
+    <section class="formularioTareas" id="seccionFormulario" hidden>
+        <form id="formularioTarea">
+            <input type="text" id="nombreTarea"
+                   placeholder="Nombre de la tarea" required>
+
+            <input type="date" id="fechaTarea" required>
+
+            <select id="prioridadTarea" required>
+                <option value="">Selecciona una prioridad</option>
+                <option value="alta">Alta</option>
+                <option value="media">Media</option>
+                <option value="baja">Baja</option>
+            </select>
+
+            <button type="submit">Añadir tarea</button>
+        </form>
+    </section>
+
+    <div class="contenidoTareas">
+
+    <section class="listadoTareas">
+        <h2>Listado de tareas</h2>
+        <ul id="listaTareas"></ul>
+    </section>
+
+    <section class="progresoTareas">
+        <h2>Tu progreso</h2>
+
+        <p id="textoProgreso">0 de 0 tareas completadas</p>
+
+        <div class="barraProgreso">
+            <div id="progresoCompletado"></div>
+        </div>
+
+        <p id="porcentajeProgreso">0%</p>
+
+        <h3>Por prioridad</h3>
+
+        <p>Alta: <span id="prioridadAlta">0</span> tareas</p>
+        <p>Media: <span id="prioridadMedia">0</span> tareas</p>
+        <p>Baja: <span id="prioridadBaja">0</span> tareas</p>
+    </section>
+
+</div>
+
+</main>
 
 </body>
 </html>
