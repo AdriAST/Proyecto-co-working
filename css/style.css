@@ -112,3 +112,410 @@ nav a.activo {
     background-color: #D96704;
     border-radius: 5px;
 }
+
+/* PAGINA DE TAREAS */
+
+.paginaTareas {
+    padding: 30px;
+}
+
+/* CABECERA */
+
+.cabeceraTareas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.cabeceraTareas h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.cabeceraTareas p {
+    color: #777;
+    margin-top: 8px;
+}
+
+/* BOTON NUEVA TAREA */
+
+#botonNuevaTarea {
+    background-color: #D96704;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#botonNuevaTarea:hover {
+    background-color: #b85503;
+}
+
+/* FORMULARIO */
+
+.formularioTareas {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+#formularioTarea {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#formularioTarea input,
+#formularioTarea select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    flex: 1;
+}
+
+#formularioTarea button {
+    background-color: #395874;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#formularioTarea button:hover {
+    background-color: #29445e;
+}
+
+/* LISTADO DE TAREAS */
+
+.listadoTareas {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.listadoTareas h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+/* OCULTAR FORMULARIO */
+
+.formularioTareas[hidden] {
+    display: none;
+}
+
+/* LISTA DE TAREAS */
+
+#listaTareas {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#listaTareas li {
+    padding: 18px 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+#listaTareas li:last-child {
+    border-bottom: none;
+}
+
+/* BOTONES DE LAS TAREAS */
+
+#listaTareas button {
+    padding: 8px 12px;
+    margin-left: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* COMPLETAR */
+
+#listaTareas button:nth-of-type(1) {
+    background-color: #395874;
+    color: white;
+}
+
+/* ELIMINAR */
+
+#listaTareas button:nth-of-type(2) {
+    background-color: #f8dddd;
+    color: #a52a2a;
+}
+
+/* EDITAR */
+
+#listaTareas button:nth-of-type(3) {
+    background-color: #F2E8DF;
+    color: #D96704;
+}
+
+/* EFECTO AL PASAR EL RATON */
+
+#listaTareas button:hover {
+    opacity: 0.8;
+}
+
+/* TARJETAS DE RESUMEN DE TAREAS */
+
+.resumenTareas {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.tarjetaTarea {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    border: 1px solid #e5e5e5;
+}
+
+.tarjetaTarea h3 {
+    color: #395874;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.tarjetaTarea p {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+.tarjetaTarea span {
+    color: #888;
+    font-size: 12px;
+}
+
+/* DISTRIBUCION DE TAREAS */
+
+.contenidoTareas {
+    display: flex;
+    gap: 20px;
+}
+
+.listadoTareas {
+    flex: 2;
+    min-width: 0;
+}
+
+.progresoTareas {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.progresoTareas h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.progresoTareas h3 {
+    margin-top: 30px;
+    font-size: 16px;
+}
+
+/* BARRA DE PROGRESO */
+
+.barraProgreso {
+    background-color: #e5e5e5;
+    height: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#progresoCompletado {
+    background-color: #D96704;
+    height: 100%;
+    width: 0%;
+    border-radius: 10px;
+}
+
+#porcentajeProgreso {
+    font-weight: bold;
+}
+
+/* MEJORAR LISTADO DE TAREAS */
+
+#listaTareas li {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+#listaTareas li:hover {
+    background-color: #faf8f6;
+}
+
+/* BOTONES */
+
+#listaTareas button {
+    margin-left: 0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+/* SEPARAR EL PRIMER BOTON DEL TEXTO */
+
+#listaTareas button:first-of-type {
+    margin-left: auto;
+}
+
+/* BOTONES DESACTIVADOS */
+
+#listaTareas button:disabled {
+    background-color: #ddd;
+    color: #777;
+    cursor: default;
+}
+
+/* ETIQUETAS DE PRIORIDAD */
+
+.prioridad {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+/* ALTA - ROJO */
+.prioridad.alta {
+    background-color: #FCE2E2;
+    color: #B42318;
+}
+
+/* MEDIA - NARANJA */
+.prioridad.media {
+    background-color: #FFF0D9;
+    color: #B85C00;
+}
+
+/* BAJA - VERDE */
+.prioridad.baja {
+    background-color: #DDF3E4;
+    color: #237A42;
+}
+
+/* TAREAS COMPLETADAS */
+
+#listaTareas li.tareaCompletada {
+    background-color: #F0F8F1;
+    border-left: 4px solid #4CAF50;
+}
+
+.tareaCompletada button:first-of-type {
+    background-color: #DDF3E4;
+    color: #237A42;
+    opacity: 1;
+}
+
+.tareaCompletada .prioridad {
+    opacity: 0.6;
+}
+
+/* MENU LATERAL */
+
+nav {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+nav h2 {
+    font-size: 26px;
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+nav a {
+    padding: 14px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+nav a:hover {
+    background-color: #4D6B86;
+}
+
+nav a.activo {
+    background-color: #D96704;
+    font-weight: bold;
+}
+/* ENLACES DEL MENU LATERAL */
+
+nav a {
+    background-color: #466681;
+    border-left: 3px solid #8EACC4;
+    border-radius: 4px;
+    padding: 16px 18px;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+/* AL PASAR EL RATON */
+
+nav a:hover {
+    background-color: #557792;
+}
+
+/* PAGINA ACTIVA */
+
+nav a.activo {
+    background-color: #D96704;
+    border-left: 3px solid white;
+}
+
+/* PARTE INFERIOR DEL MENU */
+
+.pieMenu {
+    margin-top: auto;
+    text-align: center;
+}
+
+.infoMenu {
+    background-color: #F0F8F1;
+    padding: 15px;
+    border-radius: 8px;
+    color: #D96704;
+    text-align: left;
+}
+
+.infoMenu h3 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.infoMenu p {
+    font-size: 13px;
+}
+
+.infoMenu hr {
+    border: none;
+    border-top: 1px solid #7890A5;
+}
+
+.pieMenu small {
+    display: block;
+    color: #C5D3DF;
+    margin-top: 15px;
+    font-size: 11px;
+}
