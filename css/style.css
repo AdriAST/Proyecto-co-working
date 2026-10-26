@@ -847,3 +847,262 @@ nav a.activo {
     width: 100%;
     box-sizing: border-box;
 }
+
+
+/* PAGINA DE GASTOS */
+
+.paginaGastos {
+    margin-left: 280px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* CABECERA */
+
+.cabeceraGastos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.cabeceraGastos h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.cabeceraGastos p {
+    color: #777;
+    margin-top: 8px;
+}
+
+#botonNuevoGasto {
+    background-color: #D96704;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#botonNuevoGasto:hover {
+    background-color: #b85503;
+}
+
+/* TARJETAS DE RESUMEN */
+
+.resumenGastos {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.tarjetaGasto {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e5e5e5;
+    flex: 1;
+    min-width: 0;
+}
+
+.tarjetaGasto h3 {
+    color: #395874;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.tarjetaGasto p {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+.tarjetaGasto span {
+    color: #888;
+    font-size: 12px;
+}
+
+/* FORMULARIO */
+
+.formularioGastos {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.formularioGastos[hidden] {
+    display: none;
+}
+
+.formularioGastos h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+#formularioGasto {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#formularioGasto input,
+#formularioGasto select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    flex: 1;
+    min-width: 150px;
+    box-sizing: border-box;
+}
+
+#formularioGasto input:focus,
+#formularioGasto select:focus {
+    outline: none;
+    border-color: #395874;
+}
+
+#formularioGasto button {
+    background-color: #395874;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#formularioGasto button:hover {
+    background-color: #29445e;
+}
+
+/* DISTRIBUCION DEL CONTENIDO */
+
+.contenidoGastos {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* LISTADO DE GASTOS */
+
+.listadoGastos {
+    flex: 2;
+    min-width: 0;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.listadoGastos h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+#listaGastos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#listaGastos li {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+#listaGastos li:last-child {
+    border-bottom: none;
+}
+
+#listaGastos li:hover {
+    background-color: #faf8f6;
+}
+
+/* BOTONES DEL LISTADO */
+
+#listaGastos button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#listaGastos button:first-of-type {
+    background-color: #f8dddd;
+    color: #a52a2a;
+    margin-left: auto;
+}
+
+#listaGastos button:last-of-type {
+    background-color: #F2E8DF;
+    color: #D96704;
+}
+
+#listaGastos button:hover {
+    opacity: 0.8;
+}
+
+/* CATEGORIAS */
+
+.categoriasGastos {
+    flex: 1;
+    min-width: 0;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.categoriasGastos h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.categoriasGastos > p {
+    color: #777;
+    font-size: 13px;
+}
+
+#listaCategoriasGastos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#listaCategoriasGastos li {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+#listaCategoriasGastos strong {
+    color: #D96704;
+}
+
+/* ADAPTACION A PANTALLAS PEQUEÑAS */
+
+@media (max-width: 900px) {
+    .resumenGastos,
+    .contenidoGastos {
+        flex-direction: column;
+    }
+
+    .cabeceraGastos {
+        flex-wrap: wrap;
+    }
+}

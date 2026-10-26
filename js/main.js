@@ -50,6 +50,7 @@ class GestorTareas {
 
 
 // ELEMENTOS DEL HTML DE TAREAS
+
 const formulario = document.getElementById("formularioTarea");
 const nombreTarea = document.getElementById("nombreTarea");
 const fechaTarea = document.getElementById("fechaTarea");
@@ -63,16 +64,20 @@ const gestor = new GestorTareas();
 
 
 // ELEMENTOS DEL HTML DE EVENTOS
+
 const formularioEvento = document.getElementById("formularioEvento");
 const nombreEvento = document.getElementById("nombreEvento");
 const fechaEvento = document.getElementById("fechaEvento");
 const descripcionEvento = document.getElementById("descripcionEvento");
 const listaEventos = document.getElementById("listaEventos");
 const eventosProximos = document.getElementById("eventosProximos");
+
 const gestorEventos = new GestorEventos();
 const numeroEventos = document.getElementById("numeroEventos");
 
+
 // VALIDAR EVENTOS
+
 function validarEvento(nombre, fecha) {
 
     if (nombre.trim() === "") {
@@ -99,7 +104,9 @@ function validarEvento(nombre, fecha) {
     return true;
 }
 
+
 // CREAR EVENTOS
+
 if (formularioEvento) {
 
     formularioEvento.addEventListener("submit", function (evento) {
@@ -112,6 +119,7 @@ if (formularioEvento) {
         if (!validarEvento(nombre, fecha)) {
             return;
         }
+
         let nuevoEvento = new Evento(Date.now(), nombre, fecha, descripcion);
 
         gestorEventos.agregarEvento(nuevoEvento);
@@ -124,6 +132,7 @@ if (formularioEvento) {
 
 
 // MOSTRAR EVENTOS
+
 function mostrarEventos() {
 
     if (listaEventos) {
@@ -139,7 +148,9 @@ function mostrarEventos() {
             if (evento.descripcion !== "") {
                 li.textContent += " - " + evento.descripcion;
             }
+
             // BOTON ELIMINAR EVENTO
+
             let botonEliminar = document.createElement("button");
             botonEliminar.textContent = "Eliminar";
 
@@ -157,6 +168,7 @@ function mostrarEventos() {
             li.appendChild(botonEliminar);
 
             // BOTON EDITAR EVENTO
+
             let botonEditar = document.createElement("button");
             botonEditar.textContent = "Editar";
 
@@ -199,7 +211,9 @@ function mostrarEventos() {
     }
 }
 
+
 // MOSTRAR PROXIMOS EVENTOS EN INDEX.HTML
+
 function mostrarEventosProximos() {
 
     if (eventosProximos) {
@@ -226,7 +240,9 @@ function mostrarEventosProximos() {
     }
 }
 
+
 // CONTAR PROXIMOS EVENTOS
+
 function contarEventos() {
 
     if (numeroEventos) {
@@ -250,7 +266,9 @@ function contarEventos() {
     }
 }
 
+
 // VALIDAR TAREAS
+
 function validarTarea(nombre, fecha, prioridad) {
 
     if (nombre.trim() === "") {
@@ -263,20 +281,17 @@ function validarTarea(nombre, fecha, prioridad) {
         return false;
     }
 
-    // Comprobar que la fecha sea obligatoria
     if (fecha === "") {
         alert("Debes seleccionar una fecha");
         return false;
     }
 
-    // Obtener la fecha de hoy
     let hoy = new Date();
 
     let fechaActual = hoy.getFullYear() + "-" +
         String(hoy.getMonth() + 1).padStart(2, "0") + "-" +
         String(hoy.getDate()).padStart(2, "0");
 
-    // Comprobar que la fecha no sea anterior a hoy
     if (fecha < fechaActual) {
         alert("La fecha no puede ser anterior a hoy");
         return false;
@@ -287,6 +302,7 @@ function validarTarea(nombre, fecha, prioridad) {
 
 
 // CREAR TAREAS
+
 if (formulario) {
 
     formulario.addEventListener("submit", function (evento) {
@@ -312,6 +328,7 @@ if (formulario) {
 
 
 // MOSTRAR TAREAS EN TAREAS.HTML
+
 function mostrarTareas() {
 
     if (listaTareas) {
@@ -332,8 +349,8 @@ function mostrarTareas() {
                 li.textContent += " - Prioridad: " + tarea.prioridad;
             }
 
-
             // BOTON COMPLETAR
+
             let botonCompletar = document.createElement("button");
             botonCompletar.textContent = "Completar";
 
@@ -353,8 +370,8 @@ function mostrarTareas() {
 
             li.appendChild(botonCompletar);
 
-
             // BOTON ELIMINAR
+
             let botonEliminar = document.createElement("button");
             botonEliminar.textContent = "Eliminar";
 
@@ -371,8 +388,8 @@ function mostrarTareas() {
 
             li.appendChild(botonEliminar);
 
-
             // BOTON EDITAR
+
             let botonEditar = document.createElement("button");
             botonEditar.textContent = "Editar";
 
@@ -417,8 +434,6 @@ function mostrarTareas() {
 
             li.appendChild(botonEditar);
 
-
-            // AÑADIR TAREA A LA LISTA
             listaTareas.appendChild(li);
         });
     }
@@ -426,6 +441,7 @@ function mostrarTareas() {
 
 
 // MOSTRAR TAREAS PENDIENTES EN INDEX.HTML
+
 function mostrarTareasPendientes() {
 
     if (tareasPendientes) {
@@ -448,6 +464,7 @@ function mostrarTareasPendientes() {
 
 
 // CONTAR TAREAS PENDIENTES
+
 function contarTareasPendientes() {
 
     if (numeroTareas) {
@@ -466,10 +483,47 @@ function contarTareasPendientes() {
 }
 
 
+// MOSTRAR GASTOS DEL MES EN INICIO
+
+function mostrarGastosMesInicio() {
+
+    let gastosMesInicio = document.getElementById("gastosMesInicio");
+
+    if (gastosMesInicio) {
+
+        let gastos = JSON.parse(localStorage.getItem("gastos")) || [];
+
+        let totalMes = 0;
+
+        let hoy = new Date();
+        let mesActual = hoy.getMonth() + 1;
+        let anioActual = hoy.getFullYear();
+
+        gastos.forEach(function (gasto) {
+
+            let partesFecha = gasto.fecha.split("-");
+
+            let anio = Number(partesFecha[0]);
+            let mes = Number(partesFecha[1]);
+
+            if (mes === mesActual && anio === anioActual) {
+                totalMes += Number(gasto.cantidad);
+            }
+        });
+
+        gastosMesInicio.textContent = totalMes.toFixed(2) + " €";
+    }
+}
+
+
 // MOSTRAR DATOS AL CARGAR LA PAGINA
+
 mostrarTareas();
 mostrarTareasPendientes();
 contarTareasPendientes();
+
 mostrarEventos();
 mostrarEventosProximos();
 contarEventos();
+
+mostrarGastosMesInicio();
