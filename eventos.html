@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=devide-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LifeOS - Eventos</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/main.js" defer></script>
+    <script src="js/eventos.js" defer></script>
 </head>
 
 <body>
@@ -23,10 +23,17 @@
     <header>
         <h1>Eventos</h1>
     </header>
-    <main>
-        <section>
-            <h2>Mis eventos</h2>
-            <p>Organiza tus próximos eventos.</p>
+    <main class="paginaEventos">
+        <section class="cabeceraEventos">
+            <div>
+                <h2>Mis eventos</h2>
+                <p>Organiza tus próximos eventos y fechas importantes.</p>
+            </div>
+
+            <button type="button" id="botonNuevoEvento">+ Nuevo evento</button>
+        </section>
+
+        <section class="formularioEventos" id="seccionFormularioEvento" hidden>
 
             <form id="formularioEvento">
                 <input type="text" id="nombreEvento" placeholder="Nombre del evento" required>
@@ -39,11 +46,43 @@
             </form>
         </section>
 
-        <section>
-            <h2>Lista de eventos</h2>
-            <ul id="listaEventos"></ul>
+        <section class="resumenEventos">
 
-        </section>
+    <div class="tarjetaEvento">
+        <h3>Próximos eventos</h3>
+        <p id="totalProximosEventos">0</p>
+        <span>Por celebrar</span>
+    </div>
+
+    <div class="tarjetaEvento">
+        <h3>Este mes</h3>
+        <p id="eventosEsteMes">0</p>
+        <span>Eventos del mes</span>
+    </div>
+
+    <div class="tarjetaEvento">
+        <h3>Total de eventos</h3>
+        <p id="totalEventos">0</p>
+        <span>Eventos guardados</span>
+    </div>
+
+</section>
+
+        <div class="contenidoEventos">
+
+    <section class="listadoEventos">
+        <h2>Lista de eventos</h2>
+        <ul id="listaEventos"></ul>
+    </section>
+
+    <section class="proximosEventos">
+        <h2>Próximos eventos</h2>
+        <p>Tus fechas más cercanas</p>
+
+        <ul id="listaProximosEventos"></ul>
+    </section>
+
+</div>
     </main>
 
 </body>

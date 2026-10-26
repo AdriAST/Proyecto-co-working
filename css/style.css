@@ -519,3 +519,331 @@ nav a.activo {
     margin-top: 15px;
     font-size: 11px;
 }
+
+/* CABECERA DE EVENTOS */
+
+.cabeceraEventos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.cabeceraEventos h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.cabeceraEventos p {
+    color: #777;
+    margin-top: 8px;
+}
+
+#botonNuevoEvento {
+    background-color: #D96704;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#botonNuevoEvento:hover {
+    background-color: #b85503;
+}
+
+/* FORMULARIO DE EVENTOS */
+
+.formularioEventos[hidden] {
+    display: none;
+}
+
+/* TARJETAS DE EVENTOS */
+
+.resumenEventos {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.tarjetaEvento {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    border: 1px solid #e5e5e5;
+}
+
+.tarjetaEvento h3 {
+    color: #395874;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.tarjetaEvento p {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+.tarjetaEvento span {
+    color: #888;
+    font-size: 12px;
+}
+
+/* LISTADO DE EVENTOS */
+
+.listadoEventos {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.listadoEventos h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+#listaEventos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#listaEventos li {
+    padding: 18px 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+#listaEventos li:last-child {
+    border-bottom: none;
+}
+
+#listaEventos li:hover {
+    background-color: #faf8f6;
+}
+
+/* BOTONES DE EVENTOS */
+
+#listaEventos button {
+    padding: 8px 12px;
+    margin-left: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#listaEventos button:first-of-type {
+    background-color: #f8dddd;
+    color: #a52a2a;
+}
+
+#listaEventos button:last-of-type {
+    background-color: #F2E8DF;
+    color: #D96704;
+}
+
+#listaEventos button:hover {
+    opacity: 0.8;
+}
+
+/* DISEÑO DE CADA EVENTO */
+
+#listaEventos li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 10px;
+}
+
+/* FECHA */
+
+.fechaEvento {
+    background-color: #F2E8DF;
+    border-radius: 8px;
+    padding: 10px;
+    min-width: 45px;
+    text-align: center;
+}
+
+.fechaEvento strong {
+    display: block;
+    color: #D96704;
+    font-size: 22px;
+}
+
+.fechaEvento span {
+    color: #395874;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* INFORMACION */
+
+.informacionEvento {
+    flex: 1;
+    min-width: 0;
+}
+
+.informacionEvento h3 {
+    margin: 0 0 5px 0;
+    font-size: 15px;
+    color: #313131;
+}
+
+.informacionEvento p {
+    margin: 0;
+    font-size: 13px;
+    color: #777;
+}
+
+/* FORMULARIO DE EVENTOS */
+
+.formularioEventos {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+#formularioEvento {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#formularioEvento input,
+#formularioEvento textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    flex: 1;
+    min-width: 150px;
+    box-sizing: border-box;
+}
+
+#formularioEvento textarea {
+    resize: vertical;
+    min-height: 45px;
+}
+
+#formularioEvento input:focus,
+#formularioEvento textarea:focus {
+    outline: none;
+    border-color: #395874;
+}
+
+#formularioEvento button {
+    background-color: #395874;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#formularioEvento button:hover {
+    background-color: #29445e;
+}
+
+/* DISTRIBUCION DE EVENTOS */
+
+.contenidoEventos {
+    display: flex;
+    gap: 20px;
+}
+
+.listadoEventos {
+    flex: 2;
+    min-width: 0;
+}
+
+.proximosEventos {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.proximosEventos h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.proximosEventos p {
+    color: #777;
+    font-size: 13px;
+}
+
+#listaProximosEventos {
+    list-style: none;
+    padding: 0;
+}
+
+#listaProximosEventos li {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+/* PROXIMOS EVENTOS */
+
+#listaProximosEventos li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#listaProximosEventos li p {
+    margin: 0;
+    color: #313131;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#listaProximosEventos .fechaEvento {
+    flex-shrink: 0;
+}
+
+/* AJUSTAR PAGINA DE EVENTOS */
+
+.paginaEventos {
+    margin-left: 280px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.contenidoEventos {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.listadoEventos {
+    flex: 2;
+    min-width: 0;
+}
+
+.proximosEventos {
+    flex: 1;
+    min-width: 0;
+}
+
+.resumenEventos {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.contenidoEventos {
+    width: 100%;
+    box-sizing: border-box;
+}
