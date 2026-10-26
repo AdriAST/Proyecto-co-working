@@ -1,125 +1,107 @@
-
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeOS - Gastos</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/gastos.js" defer></script>
-</head>
-
-<body>
-
-    <nav>
-        <h2>LifeOS</h2>
-        <a href="index.html">Inicio</a>
-        <a href="tareas.html">Tareas</a>
-        <a href="gastos.html" class="activo">Gastos</a>
-        <a href="calendario.html">Calendario</a>
-        <a href="eventos.html">Eventos</a>
-        <a href="notas.html">Notas</a>
-    </nav>
-
-    <header>
-        <h1>Gastos</h1>
-    </header>
-
-    <main class="paginaGastos">
-
-        <!-- CABECERA -->
-
-        <section class="cabeceraGastos">
-            <div>
-                <h2>Mis gastos</h2>
-                <p>Controla tus gastos personales.</p>
-            </div>
-
-            <button type="button" id="botonNuevoGasto">
-                + Nuevo gasto
-            </button>
-        </section>
-
-        <!-- TARJETAS DE RESUMEN -->
-
-        <section class="resumenGastos">
-
-            <div class="tarjetaGasto">
-                <h3>Total gastado</h3>
-                <p id="totalGastado">0,00 €</p>
-                <span>Todos los gastos</span>
-            </div>
-
-            <div class="tarjetaGasto">
-                <h3>Gastos de este mes</h3>
-                <p id="gastosEsteMes">0,00 €</p>
-                <span>Mes actual</span>
-            </div>
-
-            <div class="tarjetaGasto">
-                <h3>Número de gastos</h3>
-                <p id="numeroGastos">0</p>
-                <span>Gastos registrados</span>
-            </div>
-
-        </section>
-
-        <!-- FORMULARIO -->
-
-        <section class="formularioGastos" id="seccionFormularioGasto" hidden>
-
-            <h2>Añadir gasto</h2>
-
-            <form id="formularioGasto">
-
-                <input type="text"
-                       id="nombreGasto"
-                       placeholder="Nombre del gasto"
-                       required>
-
-                <input type="number"
-                       id="cantidadGasto"
-                       placeholder="Cantidad (€)"
-                       min="0.01"
-                       step="0.01"
-                       required>
-
-                <select id="categoriaGasto" required>
-                    <option value="">Selecciona una categoría</option>
-                    <option value="Alimentación">Alimentación</option>
-                    <option value="Transporte">Transporte</option>
-                    <option value="Ocio">Ocio</option>
-                    <option value="Hogar">Hogar</option>
-                    <option value="Otros">Otros</option>
-                </select>
-
-                <input type="date" id="fechaGasto" required>
-
-                <button type="submit">Añadir gasto</button>
-
-            </form>
-
-        </section>
-
-        <!-- CONTENIDO -->
-
-        <div class="contenidoGastos">
-
-            <section class="listadoGastos">
-                <h2>Lista de gastos</h2>
-                <ul id="listaGastos"></ul>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LifeOS - Gastos</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/gastos.js" defer></script>
+    </head>
+    <body>
+        <nav class="menu" aria-label="Navegación principal">
+            <a class="logo" href="index.html">Life<span>OS</span></a>
+            <a href="index.html">
+                <span aria-hidden="true">⌂</span>
+                Inicio
+            </a>
+            <a href="tareas.html">
+                <span aria-hidden="true">✓</span>
+                Tareas
+            </a>
+            <a href="eventos.html">
+                <span aria-hidden="true">◷</span>
+                Eventos
+            </a>
+            <a href="gastos.html" class="activo" aria-current="page">
+                <span aria-hidden="true">€</span>
+                Gastos
+            </a>
+            <p class="pieMenu">Tu espacio de organización personal</p>
+        </nav>
+        <header class="cabecera">
+            <h1>Gastos</h1>
+        </header>
+        <main class="pagina gastos">
+            <p id="mensaje" class="mensaje" role="alert" hidden></p>
+            <section class="tituloPagina">
+                <div>
+                    <h2>Mis gastos</h2>
+                    <p>Controla tus gastos personales.</p>
+                </div>
+                <button id="botonNuevoGasto" aria-controls="seccionFormularioGasto" aria-expanded="false">+ Nuevo gasto</button>
             </section>
-
-            <section class="categoriasGastos">
-                <h2>Gastos por categoría</h2>
-                <p>Distribución de tus gastos</p>
-                <ul id="listaCategoriasGastos"></ul>
+            <section class="estadisticas" aria-label="Resumen de gastos">
+                <div class="tarjeta estadistica">
+                    <h3>Total gastado</h3>
+                    <p id="totalGastado">0</p>
+                    <small>Todos los gastos</small>
+                </div>
+                <div class="tarjeta estadistica">
+                    <h3>Gastos de este mes</h3>
+                    <p id="gastosEsteMes">0</p>
+                    <small>Mes actual</small>
+                </div>
+                <div class="tarjeta estadistica">
+                    <h3>Número de gastos</h3>
+                    <p id="numeroGastos">0</p>
+                    <small>Gastos registrados</small>
+                </div>
             </section>
-
-        </div>
-
-    </main>
-
-</body>
+            <section class="tarjeta formulario" id="seccionFormularioGasto" hidden>
+                <h2 id="tituloFormulario">Nuevo gasto</h2>
+                <form id="formularioGasto">
+                    <div class="campo">
+                        <label for="nombreGasto">Concepto</label>
+                        <input id="nombreGasto" name="nombre" required maxlength="120">
+                    </div>
+                    <div class="campo">
+                        <label for="cantidadGasto">Cantidad (€)</label>
+                        <input type="number" id="cantidadGasto" name="cantidad" required min="0.01" max="999999999.99" step="0.01">
+                    </div>
+                    <div class="campo">
+                        <label for="categoriaGasto">Categoría</label>
+                        <select id="categoriaGasto" name="categoria" required>
+                            <option value="">Selecciona</option>
+                            <option>Alimentación</option>
+                            <option>Transporte</option>
+                            <option>Ocio</option>
+                            <option>Hogar</option>
+                            <option>Otros</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="fechaGasto">Fecha</label>
+                        <input type="date" id="fechaGasto" name="fecha" required>
+                    </div>
+                    <div class="acciones">
+                        <button type="submit">Guardar gasto</button>
+                        <button type="button" class="secundario" id="cancelarGasto">Cancelar</button>
+                    </div>
+                </form>
+            </section>
+            <div class="columnas">
+                <section class="tarjeta">
+                    <h2>Lista de gastos</h2>
+                    <ul id="listaGastos" class="lista">
+                    </ul>
+                </section>
+                <section class="tarjeta">
+                    <h2>Gastos por categoría</h2>
+                    <p class="ayuda">Todos los gastos registrados</p>
+                    <ul id="listaCategoriasGastos" class="lista">
+                    </ul>
+                </section>
+            </div>
+        </main>
+    </body>
 </html>

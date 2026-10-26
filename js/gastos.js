@@ -1,308 +1,393 @@
+const categorias = ["Alimentación", "Transporte", "Ocio", "Hogar", "Otros"];
 
-/* CLASE GASTO */
+// DATOS Y ELEMENTOS DE LA PÁGINA
 
-class Gasto {
-    constructor(id, nombre, cantidad, categoria, fecha) {
-        this.id = id;
-        this.nombre = nombre;
-        this.cantidad = cantidad;
-        this.categoria = categoria;
-        this.fecha = fecha;
-    }
+let datosDisponibles = true;
+let gastos = cargarGastos();
+let idEdicion = null;
+
+const formulario = document.getElementById("formularioGasto");
+const seccion = document.getElementById("seccionFormularioGasto");
+const botonNuevo = document.getElementById("botonNuevoGasto");
+const nombre = document.getElementById("nombreGasto");
+const cantidad = document.getElementById("cantidadGasto");
+const categoria = document.getElementById("categoriaGasto");
+const fecha = document.getElementById("fechaGasto");
+
+// ABRIR Y CERRAR EL FORMULARIO
+
+function abrirFormulario() {
+    seccion.hidden = false;
+    botonNuevo.setAttribute("aria-expanded", "true");
 }
 
+function cerrarFormulario() {
+    idEdicion = null;
+    formulario.reset();
+    seccion.hidden = true;
+    botonNuevo.setAttribute("aria-expanded", "false");
+}
 
-/* GESTOR DE GASTOS */
-
-class GestorGastos {
-    constructor() {
-        this.gastos = JSON.parse(localStorage.getItem("gastos")) || [];
+botonNuevo.addEventListener("click", function () {
+    if (!seccion.hidden) {
+        cerrarFormulario();
+        return;
     }
 
-    agregarGasto(gasto) {
-        this.gastos.push(gasto);
-        this.guardarGastos();
+    idEdicion = null;
+    formulario.reset();
+    fecha.value = fechaHoy();
+    document.getElementById("tituloFormulario").textContent = "Nuevo gasto";
+    abrirFormulario();
+});
+
+document.getElementById("cancelarGasto").addEventListener("click", cerrarFormulario);
+formulario.addEventListener("submit", guardarGasto);
+
+// EDITAR Y ELIMINAR
+
+function editarGasto(gasto) {
+    idEdicion = gasto.id;
+    nombre.value = gasto.nombre;
+    cantidad.value = gasto.cantidad;
+    categoria.value = gasto.categoria;
+    fecha.value = gasto.fecha;
+    document.getElementById("tituloFormulario").textContent = "Editar gasto";
+    abrirFormulario();
+}
+
+function eliminarGasto(gasto) {
+    const confirmado = confirm('¿Eliminar el gasto "' + gasto.nombre + '"?');
+
+    if (!confirmado) {
+        return;
     }
 
-    guardarGastos() {
-        localStorage.setItem("gastos", JSON.stringify(this.gastos));
-    }
+    const nuevosDatos = gastos.filter(function (dato) {
+        return dato.id !== gasto.id;
+    });
 
-    eliminarGasto(id) {
-        this.gastos = this.gastos.filter(gasto => gasto.id !== id);
-        this.guardarGastos();
-    }
-
-    editarGasto(id, nombre, cantidad, categoria, fecha) {
-        let gasto = this.gastos.find(gasto => gasto.id === id);
-
-        if (gasto) {
-            gasto.nombre = nombre;
-            gasto.cantidad = cantidad;
-            gasto.categoria = categoria;
-            gasto.fecha = fecha;
-
-            this.guardarGastos();
+    if (guardarGastos(nuevosDatos)) {
+        if (idEdicion === gasto.id) {
+            cerrarFormulario();
         }
-    }
-}
-
-
-/* CREAR GESTOR */
-
-const gestorGastos = new GestorGastos();
-
-
-/* VALIDAR GASTO */
-
-function validarGasto(nombre, cantidad, categoria, fecha) {
-
-    if (nombre.trim() === "") {
-        alert("El nombre del gasto es obligatorio");
-        return false;
-    }
-
-    if (isNaN(cantidad) || cantidad <= 0) {
-        alert("La cantidad debe ser mayor que 0");
-        return false;
-    }
-
-    if (categoria === "") {
-        alert("Selecciona una categoría");
-        return false;
-    }
-
-    if (fecha === "") {
-        alert("Selecciona una fecha");
-        return false;
-    }
-
-    return true;
-}
-
-
-/* CREAR GASTO */
-
-const formularioGasto = document.getElementById("formularioGasto");
-
-formularioGasto.addEventListener("submit", function(evento) {
-
-    evento.preventDefault();
-
-    let nombre = document.getElementById("nombreGasto").value;
-    let cantidad = Number(document.getElementById("cantidadGasto").value);
-    let categoria = document.getElementById("categoriaGasto").value;
-    let fecha = document.getElementById("fechaGasto").value;
-
-    if (validarGasto(nombre, cantidad, categoria, fecha)) {
-
-        let gasto = new Gasto(
-            Date.now(),
-            nombre.trim(),
-            cantidad,
-            categoria,
-            fecha
-        );
-
-        gestorGastos.agregarGasto(gasto);
 
         mostrarGastos();
-
-        formularioGasto.reset();
     }
-});
-
-
-/* MOSTRAR GASTOS */
-
-function mostrarGastos() {
-
-    const listaGastos = document.getElementById("listaGastos");
-
-    listaGastos.innerHTML = "";
-
-    gestorGastos.gastos.forEach(function(gasto) {
-
-        let li = document.createElement("li");
-
-        li.textContent = gasto.nombre + " - " +
-            Number(gasto.cantidad).toFixed(2) + " € - " +
-            gasto.categoria + " - " +
-            gasto.fecha;
-
-        /* BOTON ELIMINAR */
-
-        let botonEliminar = document.createElement("button");
-        botonEliminar.textContent = "Eliminar";
-
-        botonEliminar.addEventListener("click", function() {
-
-            gestorGastos.eliminarGasto(gasto.id);
-
-            mostrarGastos();
-        });
-
-        /* BOTON EDITAR */
-
-        let botonEditar = document.createElement("button");
-        botonEditar.textContent = "Editar";
-
-        botonEditar.addEventListener("click", function() {
-
-            let nuevoNombre = prompt("Nombre del gasto:", gasto.nombre);
-
-            if (nuevoNombre === null) {
-                return;
-            }
-
-            let nuevaCantidad = prompt("Cantidad:", gasto.cantidad);
-
-            if (nuevaCantidad === null) {
-                return;
-            }
-
-            let nuevaCategoria = prompt("Categoría:", gasto.categoria);
-
-            if (nuevaCategoria === null) {
-                return;
-            }
-
-            let nuevaFecha = prompt("Fecha (AAAA-MM-DD):", gasto.fecha);
-
-            if (nuevaFecha === null) {
-                return;
-            }
-
-            let cantidadNumero = Number(nuevaCantidad);
-
-            if (validarGasto(
-                nuevoNombre,
-                cantidadNumero,
-                nuevaCategoria,
-                nuevaFecha
-            )) {
-
-                gestorGastos.editarGasto(
-                    gasto.id,
-                    nuevoNombre.trim(),
-                    cantidadNumero,
-                    nuevaCategoria,
-                    nuevaFecha
-                );
-
-                mostrarGastos();
-            }
-        });
-
-        li.appendChild(botonEliminar);
-        li.appendChild(botonEditar);
-
-        listaGastos.appendChild(li);
-    });
 }
 
+// GUARDAR EL FORMULARIO: CREACIÓN O EDICIÓN
 
-/* MOSTRAR GASTOS AL CARGAR LA PAGINA */
-
-mostrarGastos();
-
-
-/* MOSTRAR Y OCULTAR FORMULARIO */
-
-const botonNuevoGasto = document.getElementById("botonNuevoGasto");
-const seccionFormularioGasto = document.getElementById("seccionFormularioGasto");
-
-botonNuevoGasto.addEventListener("click", function() {
-    seccionFormularioGasto.hidden = !seccionFormularioGasto.hidden;
-});
+function guardarGasto(eventoFormulario) {
+    eventoFormulario.preventDefault();
+    const importe = Number(cantidad.value);
+    const centimos = Math.round(importe * 100);
 
 
-/* CALCULAR ESTADISTICAS */
+    const cantidadCorrecta = Number.isFinite(importe) && importe > 0 && importe <= 999999999.99;
+    const decimalesCorrectos = Math.abs(importe * 100 - centimos) <= 0.0001;
+    const categoriaCorrecta = categorias.indexOf(categoria.value) !== -1;
 
-function contarGastos() {
+    if (nombre.value.trim() === "" || !fechaValida(fecha.value) || !cantidadCorrecta || !decimalesCorrectos || !categoriaCorrecta) {
+        mostrarAviso("Revisa el concepto, la fecha, la categoría y el importe (positivo y con un máximo de dos decimales).");
+        return;
+    }
 
-    let total = 0;
-    let totalMes = 0;
+    let id = idEdicion;
 
-    let hoy = new Date();
-    let mesActual = hoy.getMonth() + 1;
-    let anioActual = hoy.getFullYear();
+    if (id === null) {
+        id = nuevoIdGasto();
+    }
 
-    gestorGastos.gastos.forEach(function(gasto) {
-
-        let cantidad = Number(gasto.cantidad);
-        total += cantidad;
-
-        let partesFecha = gasto.fecha.split("-");
-        let anio = Number(partesFecha[0]);
-        let mes = Number(partesFecha[1]);
-
-        if (mes === mesActual && anio === anioActual) {
-            totalMes += cantidad;
-        }
-    });
-
-    document.getElementById("totalGastado").textContent =
-        total.toFixed(2) + " €";
-
-    document.getElementById("gastosEsteMes").textContent =
-        totalMes.toFixed(2) + " €";
-
-    document.getElementById("numeroGastos").textContent =
-        gestorGastos.gastos.length;
-}
-
-
-/* MOSTRAR GASTOS POR CATEGORIA */
-
-function mostrarCategoriasGastos() {
-
-    const lista = document.getElementById("listaCategoriasGastos");
-
-    lista.innerHTML = "";
-
-    let categorias = {
-        "Alimentación": 0,
-        "Transporte": 0,
-        "Ocio": 0,
-        "Hogar": 0,
-        "Otros": 0
+    const gasto = {
+        id: id,
+        nombre: nombre.value.trim(),
+        cantidad: centimos / 100,
+        categoria: categoria.value,
+        fecha: fecha.value
     };
 
-    gestorGastos.gastos.forEach(function(gasto) {
+    const nuevosDatos = gastos.slice();
 
-        if (categorias[gasto.categoria] !== undefined) {
-            categorias[gasto.categoria] += Number(gasto.cantidad);
+    if (idEdicion === null) {
+        nuevosDatos.push(gasto);
+    } else {
+        for (let i = 0; i < nuevosDatos.length; i++) {
+            if (nuevosDatos[i].id === idEdicion) {
+                nuevosDatos[i] = gasto;
+                break;
+            }
         }
-    });
+    }
 
-    for (let categoria in categorias) {
-
-        let li = document.createElement("li");
-
-        let nombre = document.createElement("span");
-        nombre.textContent = categoria;
-
-        let cantidad = document.createElement("strong");
-        cantidad.textContent = categorias[categoria].toFixed(2) + " €";
-
-        li.appendChild(nombre);
-        li.appendChild(cantidad);
-
-        lista.appendChild(li);
+    if (guardarGastos(nuevosDatos)) {
+        cerrarFormulario();
+        mostrarGastos();
     }
 }
 
+// MOSTRAR LOS GASTOS
 
-/* ACTUALIZAR RESUMEN DESPUES DE CADA CAMBIO */
+function mostrarGastos() {
+    const lista = document.getElementById("listaGastos");
+    lista.innerHTML = "";
+    const ordenados = gastos.slice();
 
-const mostrarGastosOriginal = mostrarGastos;
+    ordenados.sort(function (a, b) {
+        if (a.fecha < b.fecha) {
+            return -1;
+        }
 
-mostrarGastos = function() {
-    mostrarGastosOriginal();
+        if (a.fecha > b.fecha) {
+            return 1;
+        }
+
+        return 0;
+    });
+
+    ordenados.forEach(function (gasto) {
+        const fila = document.createElement("li");
+        const informacion = document.createElement("div");
+        informacion.className = "informacion";
+
+        const titulo = document.createElement("strong");
+        titulo.textContent = gasto.nombre;
+
+        const fechaGasto = document.createElement("small");
+        fechaGasto.textContent = formatoFecha(gasto.fecha) + " · " + gasto.categoria;
+
+        const importe = document.createElement("strong");
+        importe.className = "importe";
+        importe.textContent = mostrarEuros(Math.round(gasto.cantidad * 100) / 100);
+
+        informacion.appendChild(titulo);
+        informacion.appendChild(fechaGasto);
+        fila.appendChild(informacion);
+        fila.appendChild(importe);
+
+        const acciones = document.createElement("div");
+        acciones.className = "acciones";
+
+        const botonEditar = document.createElement("button");
+        botonEditar.type = "button";
+        botonEditar.className = "secundario";
+        botonEditar.textContent = "Editar";
+        botonEditar.addEventListener("click", function () {
+            editarGasto(gasto);
+        });
+
+        const botonEliminar = document.createElement("button");
+        botonEliminar.type = "button";
+        botonEliminar.className = "borrar";
+        botonEliminar.textContent = "Eliminar";
+        botonEliminar.addEventListener("click", function () {
+            eliminarGasto(gasto);
+        });
+
+        acciones.appendChild(botonEditar);
+        acciones.appendChild(botonEliminar);
+        fila.appendChild(acciones);
+        lista.appendChild(fila);
+    });
+
+    if (lista.children.length === 0) {
+        const aviso = document.createElement("li");
+        aviso.className = "vacio";
+        aviso.textContent = "No hay gastos guardados.";
+        lista.appendChild(aviso);
+    }
+
     contarGastos();
     mostrarCategoriasGastos();
-};
+}
+
+// TOTALES Y CATEGORÍAS
+
+function contarGastos() {
+    let total = 0;
+    let totalMes = 0;
+    const mesActual = fechaHoy().substring(0, 7);
+
+    gastos.forEach(function (gasto) {
+        const centimos = Math.round(gasto.cantidad * 100);
+        total += centimos;
+
+        if (gasto.fecha.substring(0, 7) === mesActual) {
+            totalMes += centimos;
+        }
+    });
+
+    document.getElementById("totalGastado").textContent = mostrarEuros(total / 100);
+    document.getElementById("gastosEsteMes").textContent = mostrarEuros(totalMes / 100);
+    document.getElementById("numeroGastos").textContent = gastos.length;
+}
+
+function mostrarCategoriasGastos() {
+    const lista = document.getElementById("listaCategoriasGastos");
+    lista.innerHTML = "";
+
+    categorias.forEach(function (categoria) {
+        let total = 0;
+
+        gastos.forEach(function (gasto) {
+            if (gasto.categoria === categoria) {
+                total += Math.round(gasto.cantidad * 100);
+            }
+        });
+
+        const fila = document.createElement("li");
+        const nombreCategoria = document.createElement("span");
+        nombreCategoria.textContent = categoria;
+
+        const importe = document.createElement("strong");
+        importe.textContent = mostrarEuros(total / 100);
+
+        fila.appendChild(nombreCategoria);
+        fila.appendChild(importe);
+        lista.appendChild(fila);
+    });
+}
+
+function mostrarEuros(cantidad) {
+    return cantidad.toFixed(2).replace(".", ",") + " €";
+}
+
+// ALMACENAMIENTO
+
+function cargarGastos() {
+    try {
+        const texto = localStorage.getItem("gastos");
+        let lista = [];
+
+        if (texto !== null) {
+            lista = JSON.parse(texto);
+        }
+
+        if (!Array.isArray(lista)) {
+            throw new Error("Formato incorrecto");
+        }
+
+        const identificadores = [];
+
+        for (let i = 0; i < lista.length; i++) {
+            const dato = lista[i];
+
+            if (!dato || (typeof dato.id !== "number" && typeof dato.id !== "string")) {
+                throw new Error("Identificador incorrecto");
+            }
+
+            if (typeof dato.id === "number" && !Number.isFinite(dato.id)) {
+                throw new Error("Identificador incorrecto");
+            }
+
+            if (identificadores.indexOf(dato.id) !== -1) {
+                throw new Error("Identificador repetido");
+            }
+
+            identificadores.push(dato.id);
+
+            if (typeof dato.nombre !== "string" || dato.nombre.trim() === "" || !fechaValida(dato.fecha)) {
+                throw new Error("Datos incorrectos");
+            }
+
+            if (!Number.isFinite(dato.cantidad) || dato.cantidad <= 0 || categorias.indexOf(dato.categoria) === -1) {
+                throw new Error("Gasto incorrecto");
+            }
+        }
+
+        return lista;
+    } catch (error) {
+        datosDisponibles = false;
+        mostrarAviso("No se pueden leer los datos de gastos. Se conservan sin sobrescribir. Revisa el almacenamiento del navegador.");
+        return [];
+    }
+}
+
+function guardarGastos(nuevosDatos) {
+    if (!datosDisponibles) {
+        mostrarAviso("Primero debes revisar los datos de gastos en el almacenamiento del navegador.");
+        return false;
+    }
+
+    try {
+        localStorage.setItem("gastos", JSON.stringify(nuevosDatos));
+        gastos = nuevosDatos;
+        document.getElementById("mensaje").hidden = true;
+        return true;
+    } catch (error) {
+        mostrarAviso("No se han guardado los cambios. Comprueba el espacio y los permisos del navegador.");
+        return false;
+    }
+}
+
+function nuevoIdGasto() {
+    let id = Date.now();
+
+    gastos.forEach(function (dato) {
+        if (typeof dato.id === "number" && dato.id >= id) {
+            id = dato.id + 1;
+        }
+    });
+
+    return id;
+}
+
+// FECHAS
+
+function fechaHoy() {
+    const hoy = new Date();
+    let mes = hoy.getMonth() + 1;
+    let dia = hoy.getDate();
+
+    if (mes < 10) {
+        mes = "0" + mes;
+    }
+
+    if (dia < 10) {
+        dia = "0" + dia;
+    }
+
+    return hoy.getFullYear() + "-" + mes + "-" + dia;
+}
+
+function fechaValida(fecha) {
+    if (typeof fecha !== "string" || fecha.length !== 10) {
+        return false;
+    }
+
+    const partes = fecha.split("-");
+
+    if (partes.length !== 3 || partes[0].length !== 4 || partes[1].length !== 2 || partes[2].length !== 2) {
+        return false;
+    }
+
+    const anio = Number(partes[0]);
+    const mes = Number(partes[1]);
+    const dia = Number(partes[2]);
+
+    if (anio < 1000 || anio > 9999) {
+        return false;
+    }
+
+    const prueba = new Date(anio, mes - 1, dia);
+    return prueba.getFullYear() === anio &&
+        prueba.getMonth() === mes - 1 &&
+        prueba.getDate() === dia;
+}
+
+function formatoFecha(fecha) {
+    const partes = fecha.split("-");
+    return partes[2] + "/" + partes[1] + "/" + partes[0];
+}
+
+// AVISOS
+
+function mostrarAviso(texto) {
+    const mensaje = document.getElementById("mensaje");
+    mensaje.textContent = texto;
+    mensaje.hidden = false;
+}
+
+// CARGA INICIAL
 
 mostrarGastos();
-

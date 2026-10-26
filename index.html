@@ -1,70 +1,89 @@
-
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeOS - Inicio</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/main.js" defer></script>
-</head>
-
-<body>
-    <nav>
-        <h2>LifeOS</h2>
-        <a href="index.html" class="activo">Inicio</a>
-        <a href="tareas.html">Tareas</a>
-        <a href="gastos.html">Gastos</a>
-        <a href="calendario.html">Calendario</a>
-        <a href="eventos.html">Eventos</a>
-        <a href="notas.html">Notas</a>
-    </nav>
-
-    <header>
-        <h1>Inicio</h1>
-    </header>
-
-    <main>
-        <section class="bienvenida">
-            <h2>Bienvenido a LifeOS</h2>
-            <p>Organiza tu día y mantén todo bajo control.</p>
-        </section>
-
-        <section class="resumen">
-            <div class="tarjeta">
-                <h3>Tareas pendientes</h3>
-                <p id="numeroTareas">0</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LifeOS - Panel de inicio</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/main.js" defer></script>
+    </head>
+    <body>
+        <a class="saltar" href="#contenido">Saltar al contenido</a>
+        <nav class="menu" aria-label="Navegación principal">
+            <a class="logo" href="index.html">Life<span>OS</span></a>
+            <a href="index.html" class="activo" aria-current="page">
+                <span aria-hidden="true">⌂</span>
+                Inicio
+            </a>
+            <a href="tareas.html">
+                <span aria-hidden="true">✓</span>
+                Tareas
+            </a>
+            <a href="eventos.html">
+                <span aria-hidden="true">◷</span>
+                Eventos
+            </a>
+            <a href="gastos.html">
+                <span aria-hidden="true">€</span>
+                Gastos
+            </a>
+            <p class="pieMenu">Tu espacio de organización personal</p>
+        </nav>
+        <header class="cabecera">
+            <h1>Panel de inicio</h1>
+        </header>
+        <main id="contenido" class="pagina index">
+            <p id="mensaje" class="mensaje" role="alert" hidden></p>
+            <section class="bienvenida">
+                <p class="subtitulo" id="fechaHoy"></p>
+                <h2>Bienvenido a LifeOS</h2>
+                <p>Aquí tienes el resumen de tu actividad.</p>
+            </section>
+            <section class="estadisticas" aria-label="Resumen general">
+                <article class="tarjeta estadistica">
+                    <span class="icono" aria-hidden="true">✓</span>
+                    <h3>Tareas pendientes</h3>
+                    <p id="numeroTareas">0</p>
+                    <a class="enlace" href="tareas.html">Ver tareas →</a>
+                </article>
+                <article class="tarjeta estadistica">
+                    <span class="icono" aria-hidden="true">€</span>
+                    <h3>Gastos del mes</h3>
+                    <p id="gastosMesInicio">0,00 €</p>
+                    <a class="enlace" href="gastos.html">Ver gastos →</a>
+                </article>
+                <article class="tarjeta estadistica">
+                    <span class="icono" aria-hidden="true">◷</span>
+                    <h3>Próximos eventos</h3>
+                    <p id="numeroEventos">0</p>
+                    <a class="enlace" href="eventos.html">Ver eventos →</a>
+                </article>
+            </section>
+            <div class="columnas">
+                <section class="tarjeta">
+                    <div class="tituloTarjeta">
+                        <h2>Tareas pendientes</h2>
+                        <a href="tareas.html" class="enlace">Ver todas →</a>
+                    </div>
+                    <ul id="tareasPendientes" class="lista">
+                    </ul>
+                </section>
+                <section class="tarjeta">
+                    <div class="tituloTarjeta">
+                        <h2>Próximos eventos</h2>
+                        <a href="eventos.html" class="enlace">Ver todos →</a>
+                    </div>
+                    <ul id="eventosProximos" class="lista">
+                    </ul>
+                </section>
             </div>
-
-            <div class="tarjeta">
-                <h3>Gastos del mes</h3>
-                <p id="gastosMesInicio">0,00 €</p>
-            </div>
-
-            <div class="tarjeta">
-                <h3>Próximos eventos</h3>
-                <p id="numeroEventos">0</p>
-            </div>
-
-            <div class="tarjeta">
-                <h3>Notas guardadas</h3>
-                <p>0</p>
-            </div>
-        </section>
-
-        <section class="tareasInicio">
-            <h2>Tareas pendientes</h2>
-            <ul id="tareasPendientes"></ul>
-            <a href="tareas.html">Ver todas las tareas</a>
-        </section>
-
-        <section class="eventosInicio">
-            <h2>Próximos eventos</h2>
-            <ul id="eventosProximos"></ul>
-            <a href="eventos.html">Ver todos los eventos</a>
-        </section>
-    </main>
-
-</body>
+            <section class="tarjeta progresoInicio">
+                <h2>Tu progreso</h2>
+                <p id="textoProgreso">0 de 0 tareas completadas</p>
+                <progress id="barraProgreso" max="100" value="0" aria-label="Tareas completadas"></progress>
+                <p id="porcentajeProgreso" class="porcentaje">0%</p>
+                <a class="enlace" href="tareas.html">Gestionar tareas →</a>
+            </section>
+        </main>
+    </body>
 </html>

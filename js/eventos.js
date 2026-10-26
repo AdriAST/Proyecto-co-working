@@ -1,328 +1,376 @@
-// CLASE EVENTO
-class Evento {
-    constructor(id, nombre, fecha, descripcion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.fecha = fecha;
-        this.descripcion = descripcion;
-    }
+// DATOS Y ELEMENTOS DE LA PÁGINA
+
+let datosDisponibles = true;
+let eventos = cargarEventos();
+let idEdicion = null;
+
+const formulario = document.getElementById("formularioEvento");
+const seccion = document.getElementById("seccionFormularioEvento");
+const botonNuevo = document.getElementById("botonNuevoEvento");
+const nombre = document.getElementById("nombreEvento");
+const fecha = document.getElementById("fechaEvento");
+const lugar = document.getElementById("lugarEvento");
+const descripcion = document.getElementById("descripcionEvento");
+
+// ABRIR Y CERRAR EL FORMULARIO
+
+function abrirFormulario() {
+    seccion.hidden = false;
+    botonNuevo.setAttribute("aria-expanded", "true");
 }
 
-// GESTOR DE EVENTOS
-class GestorEventos {
-    constructor() {
-        this.eventos = JSON.parse(localStorage.getItem("eventos")) || [];
-    }
-
-    agregarEvento(evento) {
-        this.eventos.push(evento);
-        this.guardarEventos();
-    }
-
-    guardarEventos() {
-        localStorage.setItem("eventos", JSON.stringify(this.eventos));
-    }
+function cerrarFormulario() {
+    idEdicion = null;
+    formulario.reset();
+    seccion.hidden = true;
+    botonNuevo.setAttribute("aria-expanded", "false");
 }
 
-// ELEMENTOS DEL HTML
-const formularioEvento = document.getElementById("formularioEvento");
-const nombreEvento = document.getElementById("nombreEvento");
-const fechaEvento = document.getElementById("fechaEvento");
-const descripcionEvento = document.getElementById("descripcionEvento");
-const listaEventos = document.getElementById("listaEventos");
+botonNuevo.addEventListener("click", function () {
+    if (!seccion.hidden) {
+        cerrarFormulario();
+        return;
+    }
 
-const gestorEventos = new GestorEventos();
+    idEdicion = null;
+    formulario.reset();
+    fecha.value = fechaHoy();
+    document.getElementById("tituloFormulario").textContent = "Nuevo evento";
+    abrirFormulario();
+});
 
-// MOSTRAR Y OCULTAR FORMULARIO
-const botonNuevoEvento = document.getElementById("botonNuevoEvento");
-const seccionFormularioEvento = document.getElementById("seccionFormularioEvento");
+document.getElementById("cancelarEvento").addEventListener("click", cerrarFormulario);
+formulario.addEventListener("submit", guardarEvento);
 
-if (botonNuevoEvento && seccionFormularioEvento) {
-    botonNuevoEvento.addEventListener("click", function () {
+// EDITAR Y ELIMINAR
 
-        if (seccionFormularioEvento.hidden) {
-            seccionFormularioEvento.hidden = false;
-            botonNuevoEvento.textContent = "Cerrar";
-        } else {
-            seccionFormularioEvento.hidden = true;
-            botonNuevoEvento.textContent = "+ Nuevo evento";
-        }
+function editarEvento(evento) {
+    idEdicion = evento.id;
+    nombre.value = evento.nombre;
+    fecha.value = evento.fecha;
+    lugar.value = evento.lugar || "";
+    descripcion.value = evento.descripcion || "";
+    document.getElementById("tituloFormulario").textContent = "Editar evento";
+    abrirFormulario();
+}
 
+function eliminarEvento(evento) {
+    const confirmado = confirm('¿Eliminar el evento "' + evento.nombre + '"?');
+
+    if (!confirmado) {
+        return;
+    }
+
+    const nuevosDatos = eventos.filter(function (dato) {
+        return dato.id !== evento.id;
     });
-}
 
-// VALIDAR EVENTOS
-function validarEvento(nombre, fecha) {
-    if (nombre.trim() === "") {
-        alert("El nombre del evento es obligatorio");
-        return false;
-    }
-
-    if (fecha === "") {
-        alert("Debes seleccionar una fecha");
-        return false;
-    }
-
-    let hoy = new Date();
-
-    let fechaActual = hoy.getFullYear() + "-" +
-        String(hoy.getMonth() + 1).padStart(2, "0") + "-" +
-        String(hoy.getDate()).padStart(2, "0");
-
-    if (fecha < fechaActual) {
-        alert("La fecha no puede ser anterior a hoy");
-        return false;
-    }
-
-    return true;
-}
-
-// CREAR EVENTOS
-if (formularioEvento) {
-    formularioEvento.addEventListener("submit", function (evento) {
-        evento.preventDefault();
-
-        let nombre = nombreEvento.value.trim();
-        let fecha = fechaEvento.value;
-        let descripcion = descripcionEvento.value.trim();
-
-        if (!validarEvento(nombre, fecha)) {
-            return;
+    if (guardarEventos(nuevosDatos)) {
+        if (idEdicion === evento.id) {
+            cerrarFormulario();
         }
-
-        let nuevoEvento = new Evento(
-            Date.now(),
-            nombre,
-            fecha,
-            descripcion
-        );
-
-        gestorEventos.agregarEvento(nuevoEvento);
 
         mostrarEventos();
-
-        formularioEvento.reset();
-    });
-}
-
-// MOSTRAR EVENTOS
-function mostrarEventos() {
-    if (listaEventos) {
-        listaEventos.innerHTML = "";
-
-        gestorEventos.eventos.forEach(function (evento) {
-            let li = document.createElement("li");
-
-// RECUADRO DE FECHA
-let fecha = document.createElement("div");
-fecha.className = "fechaEvento";
-
-let partesFecha = evento.fecha.split("-");
-
-let dia = document.createElement("strong");
-dia.textContent = partesFecha[2];
-
-let mes = document.createElement("span");
-
-let nombresMeses = [
-    "ENE", "FEB", "MAR", "ABR", "MAY", "JUN",
-    "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"
-];
-
-mes.textContent = nombresMeses[Number(partesFecha[1]) - 1];
-
-fecha.appendChild(dia);
-fecha.appendChild(mes);
-
-// INFORMACION DEL EVENTO
-let informacion = document.createElement("div");
-informacion.className = "informacionEvento";
-
-let nombre = document.createElement("h3");
-nombre.textContent = evento.nombre;
-
-let descripcion = document.createElement("p");
-descripcion.textContent = evento.descripcion;
-
-informacion.appendChild(nombre);
-informacion.appendChild(descripcion);
-
-li.appendChild(fecha);
-li.appendChild(informacion);
-
-            // BOTON ELIMINAR
-            let botonEliminar = document.createElement("button");
-            botonEliminar.textContent = "Eliminar";
-
-            botonEliminar.addEventListener("click", function () {
-                gestorEventos.eventos = gestorEventos.eventos.filter(
-                    function (eventoGuardado) {
-                        return eventoGuardado.id !== evento.id;
-                    }
-                );
-
-                gestorEventos.guardarEventos();
-
-                mostrarEventos();
-            });
-
-            li.appendChild(botonEliminar);
-
-            // BOTON EDITAR
-            let botonEditar = document.createElement("button");
-            botonEditar.textContent = "Editar";
-
-            botonEditar.addEventListener("click", function () {
-                let nuevoNombre = prompt(
-                    "Introduce el nuevo nombre:",
-                    evento.nombre
-                );
-
-                if (nuevoNombre === null) {
-                    return;
-                }
-
-                let nuevaFecha = prompt(
-                    "Introduce la nueva fecha (AAAA-MM-DD):",
-                    evento.fecha
-                );
-
-                if (nuevaFecha === null) {
-                    return;
-                }
-
-                let nuevaDescripcion = prompt(
-                    "Introduce la nueva descripción:",
-                    evento.descripcion
-                );
-
-                if (nuevaDescripcion === null) {
-                    return;
-                }
-
-                if (!validarEvento(nuevoNombre, nuevaFecha)) {
-                    return;
-                }
-
-                evento.nombre = nuevoNombre.trim();
-                evento.fecha = nuevaFecha;
-                evento.descripcion = nuevaDescripcion.trim();
-
-                gestorEventos.guardarEventos();
-
-                mostrarEventos();
-            });
-
-            li.appendChild(botonEditar);
-
-            listaEventos.appendChild(li);
-        });
-        contarEventos();
-        mostrarProximosEventos();
     }
 }
 
-// CONTAR EVENTOS
-function contarEventos() {
+// GUARDAR EL FORMULARIO: CREACIÓN O EDICIÓN
 
+function guardarEvento(eventoFormulario) {
+    eventoFormulario.preventDefault();
+
+    if (nombre.value.trim() === "" || lugar.value.trim() === "" || !fechaValida(fecha.value)) {
+        mostrarAviso("Introduce un título, un lugar y una fecha real.");
+        return;
+    }
+
+    let id = idEdicion;
+
+    if (id === null) {
+        id = nuevoIdEvento();
+    }
+
+    const evento = {
+        id: id,
+        nombre: nombre.value.trim(),
+        fecha: fecha.value,
+        lugar: lugar.value.trim(),
+        descripcion: descripcion.value.trim()
+    };
+
+    const nuevosDatos = eventos.slice();
+
+    if (idEdicion === null) {
+        nuevosDatos.push(evento);
+    } else {
+        for (let i = 0; i < nuevosDatos.length; i++) {
+            if (nuevosDatos[i].id === idEdicion) {
+                nuevosDatos[i] = evento;
+                break;
+            }
+        }
+    }
+
+    if (guardarEventos(nuevosDatos)) {
+        cerrarFormulario();
+        mostrarEventos();
+    }
+}
+
+// MOSTRAR LOS EVENTOS
+
+function mostrarEventos() {
+    const lista = document.getElementById("listaEventos");
+    const listaProximos = document.getElementById("listaProximosEventos");
+    lista.innerHTML = "";
+    listaProximos.innerHTML = "";
+
+    const hoy = fechaHoy();
     let proximos = 0;
     let esteMes = 0;
-    let total = gestorEventos.eventos.length;
+    const ordenados = eventos.slice();
 
-    let hoy = new Date();
-
-    let fechaActual = hoy.getFullYear() + "-" +
-        String(hoy.getMonth() + 1).padStart(2, "0") + "-" +
-        String(hoy.getDate()).padStart(2, "0");
-
-    let mesActual = fechaActual.substring(0, 7);
-
-    gestorEventos.eventos.forEach(function(evento) {
-
-        // EVENTOS DE HOY O FUTUROS
-        if (evento.fecha >= fechaActual) {
-            proximos++;
+    ordenados.sort(function (a, b) {
+        if (a.fecha < b.fecha) {
+            return -1;
         }
 
-        // EVENTOS DEL MES ACTUAL
-        if (evento.fecha.substring(0, 7) === mesActual) {
+        if (a.fecha > b.fecha) {
+            return 1;
+        }
+
+        return 0;
+    });
+
+    ordenados.forEach(function (evento) {
+        if (evento.fecha.substring(0, 7) === hoy.substring(0, 7)) {
             esteMes++;
         }
 
+        if (evento.fecha >= hoy) {
+            proximos++;
+
+            if (proximos <= 3) {
+                listaProximos.appendChild(crearFilaEvento(evento));
+            }
+        }
+
+        const fila = crearFilaEvento(evento);
+
+        const acciones = document.createElement("div");
+        acciones.className = "acciones";
+
+        const botonEditar = document.createElement("button");
+        botonEditar.type = "button";
+        botonEditar.className = "secundario";
+        botonEditar.textContent = "Editar";
+        botonEditar.addEventListener("click", function () {
+            editarEvento(evento);
+        });
+
+        const botonEliminar = document.createElement("button");
+        botonEliminar.type = "button";
+        botonEliminar.className = "borrar";
+        botonEliminar.textContent = "Eliminar";
+        botonEliminar.addEventListener("click", function () {
+            eliminarEvento(evento);
+        });
+
+        acciones.appendChild(botonEditar);
+        acciones.appendChild(botonEliminar);
+        fila.appendChild(acciones);
+        lista.appendChild(fila);
     });
+
+    if (lista.children.length === 0) {
+        const aviso = document.createElement("li");
+        aviso.className = "vacio";
+        aviso.textContent = "No hay eventos guardados.";
+        lista.appendChild(aviso);
+    }
+
+    if (listaProximos.children.length === 0) {
+        const aviso = document.createElement("li");
+        aviso.className = "vacio";
+        aviso.textContent = "No tienes próximos eventos.";
+        listaProximos.appendChild(aviso);
+    }
 
     document.getElementById("totalProximosEventos").textContent = proximos;
     document.getElementById("eventosEsteMes").textContent = esteMes;
-    document.getElementById("totalEventos").textContent = total;
+    document.getElementById("totalEventos").textContent = eventos.length;
 }
 
-// MOSTRAR LOS 3 PROXIMOS EVENTOS
-function mostrarProximosEventos() {
+function crearFilaEvento(evento) {
+    const fila = document.createElement("li");
+    const informacion = document.createElement("div");
+    informacion.className = "informacion";
 
-    let listaProximos = document.getElementById("listaProximosEventos");
+    const titulo = document.createElement("strong");
+    titulo.textContent = evento.nombre;
 
-    listaProximos.innerHTML = "";
+    let lugar = evento.lugar;
 
-    let hoy = new Date();
+    if (!lugar) {
+        lugar = "Lugar sin indicar";
+    }
 
-    let fechaActual = hoy.getFullYear() + "-" +
-        String(hoy.getMonth() + 1).padStart(2, "0") + "-" +
-        String(hoy.getDate()).padStart(2, "0");
+    const fechaEvento = document.createElement("small");
+    fechaEvento.textContent = formatoFecha(evento.fecha) + " · " + lugar;
 
-    // FILTRAR EVENTOS FUTUROS
-    let proximos = gestorEventos.eventos.filter(function(evento) {
-        return evento.fecha >= fechaActual;
-    });
+    informacion.appendChild(titulo);
+    informacion.appendChild(fechaEvento);
 
-    // ORDENAR POR FECHA
-    proximos.sort(function(a, b) {
-        return a.fecha.localeCompare(b.fecha);
-    });
+    if (evento.descripcion) {
+        const descripcion = document.createElement("p");
+        descripcion.textContent = evento.descripcion;
+        informacion.appendChild(descripcion);
+    }
 
-    // MOSTRAR SOLO LOS 3 PRIMEROS
-    proximos.slice(0, 3).forEach(function(evento) {
+    fila.appendChild(informacion);
+    return fila;
+}
 
-        let li = document.createElement("li");
+// ALMACENAMIENTO
 
-// FECHA DEL EVENTO
-let fecha = document.createElement("div");
-fecha.className = "fechaEvento";
+function cargarEventos() {
+    try {
+        const texto = localStorage.getItem("eventos");
+        let lista = [];
 
-let partesFecha = evento.fecha.split("-");
+        if (texto !== null) {
+            lista = JSON.parse(texto);
+        }
 
-let dia = document.createElement("strong");
-dia.textContent = partesFecha[2];
+        if (!Array.isArray(lista)) {
+            throw new Error("Formato incorrecto");
+        }
 
-let mes = document.createElement("span");
+        const identificadores = [];
 
-let nombresMeses = [
-    "ENE", "FEB", "MAR", "ABR", "MAY", "JUN",
-    "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"
-];
+        for (let i = 0; i < lista.length; i++) {
+            const dato = lista[i];
 
-mes.textContent = nombresMeses[Number(partesFecha[1]) - 1];
+            if (!dato || (typeof dato.id !== "number" && typeof dato.id !== "string")) {
+                throw new Error("Identificador incorrecto");
+            }
 
-fecha.appendChild(dia);
-fecha.appendChild(mes);
+            if (typeof dato.id === "number" && !Number.isFinite(dato.id)) {
+                throw new Error("Identificador incorrecto");
+            }
 
-// NOMBRE DEL EVENTO
-let nombre = document.createElement("p");
-nombre.textContent = evento.nombre;
+            if (identificadores.indexOf(dato.id) !== -1) {
+                throw new Error("Identificador repetido");
+            }
 
-// AÑADIR ELEMENTOS
-li.appendChild(fecha);
-li.appendChild(nombre);
+            identificadores.push(dato.id);
 
-listaProximos.appendChild(li);
-    });
+            if (typeof dato.nombre !== "string" || dato.nombre.trim() === "" || !fechaValida(dato.fecha)) {
+                throw new Error("Datos incorrectos");
+            }
 
-    // SI NO HAY EVENTOS
-    if (proximos.length === 0) {
-        let li = document.createElement("li");
-        li.textContent = "No tienes próximos eventos";
-        listaProximos.appendChild(li);
+            if (dato.lugar !== undefined && typeof dato.lugar !== "string") {
+                throw new Error("Lugar incorrecto");
+            }
+
+            if (dato.descripcion !== undefined && typeof dato.descripcion !== "string") {
+                throw new Error("Descripción incorrecta");
+            }
+        }
+
+        return lista;
+    } catch (error) {
+        datosDisponibles = false;
+        mostrarAviso("No se pueden leer los datos de eventos. Se conservan sin sobrescribir. Revisa el almacenamiento del navegador.");
+        return [];
     }
 }
 
-// MOSTRAR EVENTOS AL CARGAR LA PAGINA
+function guardarEventos(nuevosDatos) {
+    if (!datosDisponibles) {
+        mostrarAviso("Primero debes revisar los datos de eventos en el almacenamiento del navegador.");
+        return false;
+    }
+
+    try {
+        localStorage.setItem("eventos", JSON.stringify(nuevosDatos));
+        eventos = nuevosDatos;
+        document.getElementById("mensaje").hidden = true;
+        return true;
+    } catch (error) {
+        mostrarAviso("No se han guardado los cambios. Comprueba el espacio y los permisos del navegador.");
+        return false;
+    }
+}
+
+function nuevoIdEvento() {
+    let id = Date.now();
+
+    eventos.forEach(function (dato) {
+        if (typeof dato.id === "number" && dato.id >= id) {
+            id = dato.id + 1;
+        }
+    });
+
+    return id;
+}
+
+// FECHAS
+
+function fechaHoy() {
+    const hoy = new Date();
+    let mes = hoy.getMonth() + 1;
+    let dia = hoy.getDate();
+
+    if (mes < 10) {
+        mes = "0" + mes;
+    }
+
+    if (dia < 10) {
+        dia = "0" + dia;
+    }
+
+    return hoy.getFullYear() + "-" + mes + "-" + dia;
+}
+
+function fechaValida(fecha) {
+    if (typeof fecha !== "string" || fecha.length !== 10) {
+        return false;
+    }
+
+    const partes = fecha.split("-");
+
+    if (partes.length !== 3 || partes[0].length !== 4 || partes[1].length !== 2 || partes[2].length !== 2) {
+        return false;
+    }
+
+    const anio = Number(partes[0]);
+    const mes = Number(partes[1]);
+    const dia = Number(partes[2]);
+
+    if (anio < 1000 || anio > 9999) {
+        return false;
+    }
+
+    const prueba = new Date(anio, mes - 1, dia);
+    return prueba.getFullYear() === anio &&
+        prueba.getMonth() === mes - 1 &&
+        prueba.getDate() === dia;
+}
+
+function formatoFecha(fecha) {
+    const partes = fecha.split("-");
+    return partes[2] + "/" + partes[1] + "/" + partes[0];
+}
+
+// AVISOS
+
+function mostrarAviso(texto) {
+    const mensaje = document.getElementById("mensaje");
+    mensaje.textContent = texto;
+    mensaje.hidden = false;
+}
+
+// CARGA INICIAL
+
 mostrarEventos();
